@@ -1,9 +1,12 @@
-import { ClassAvailability, Classes } from "../utils/database.entities";
+import {
+  ClassAvailability,
+  Classes,
+} from "../utils/database/database.entities";
 import {
   classAvailabilityTable,
   classesTable,
-} from "../utils/database.table.names";
-import { supabaseClient } from "../utils/supabase.key";
+} from "../utils/database/database.table.names";
+import { supabaseClient } from "../utils/database/supabase.key";
 
 export async function getClassesList(): Promise<Classes[]> {
   let { data, error } = await supabaseClient

@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button } from "@mui/material";
 import Link from "next/link";
 import { getClass } from "../../src/services/classes.api";
 
