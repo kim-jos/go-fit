@@ -1,5 +1,5 @@
-import { Users } from "../utils/database.entities";
 import { usersTable } from "../utils/database.table.names";
+import { Users } from "../utils/database/database.entities";
 import { supabaseClient } from "../utils/supabase.key";
 
 export async function getCurrUser(currUser): Promise<Users[]> {

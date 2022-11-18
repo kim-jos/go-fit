@@ -1,4 +1,4 @@
-import { Button, Stack } from "@chakra-ui/react";
+import { Button, Stack } from "@mui/material";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import ModalBase from "../components/ModalBase";
@@ -21,6 +21,7 @@ export default function Home() {
   const onClickModalOff = () => {
     setIsActive(false);
   };
+
   return (
     <div>
       <div>홈페이지</div>

@@ -1,13 +1,13 @@
-import { Button, FormControl, Select } from "@chakra-ui/react";
+import { Button, Select } from "@mui/material";
 import { getDay } from "date-fns";
+import { Form, Formik } from "formik";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import { getClassAvailability } from "../../../src/services/classes.api";
-import { createReservation } from "../../../src/services/reservations.api";
-import { isValidDate } from "../../../src/utils/date.validation";
+import { isValidReservationDate } from "../../../src/utils/validation/reservation.validation";
 import styles from "../../../styles/Home.module.css";
 
-function ReserveClass({ classAvailability, classId }) {
+function MakeReservation({ classAvailability, classId }) {
   const currDate = new Date(Date.now());
   const [reservedDate, setReserveDate] = useState(currDate);
   const [classTimes, setClassTimes] = useState(classAvailability);
@@ -25,32 +25,43 @@ function ReserveClass({ classAvailability, classId }) {
   };
 
   const handleSubmit = (date, time) => {
-    if (!isValidDate(reservedDate, time)) {
-      throw new Error("날짜가 이미 지났습니다!");
+    if (isValidReservationDate(reservedDate, time)) {
+      throw new Error("Date is invalid");
     }
-
-    createReservation({ reservation_date: date, class_time: time }, 1);
+    alert(`handleSubmit: ${date}, ${time}`);
+    // createReservation({ reservation_date: date, class_time: time }, 1);
   };
 
   return (
     <>
       <main className={styles.container}>
-        <FormControl onSubmit={() => handleSubmit(reservedDate, inputTime)}>
-          <DatePicker
-            selected={reservedDate}
-            onChange={(date) => getClassAvailableTimes(date)}
-          />
-          <Select
-            placeholder="시간 선택"
-            onSelect={() => inputTime}
-            onChange={(time) => setClassTimes(time)}
-          >
-            {classTimes.map((classTime) => {
-              return <option>{classTime.time}</option>;
-            })}
-          </Select>
-          <Button type="submit">예약하기</Button>
-        </FormControl>
+        <Formik
+          initialValues={{ date: reservedDate, time: inputTime }}
+          onSubmit={async (values) => {
+            // alert(`values: ${values.date}, ${values.time}`);
+
+            handleSubmit(values.date, values.time);
+          }}
+        >
+          <Form>
+            <DatePicker
+              selected={reservedDate}
+              onChange={(date) => getClassAvailableTimes(date)}
+            />
+            <Select
+              placeholder="시간 선택"
+              onSelect={(time) => setInputTime(time)}
+              // onChange={(time) => setClassTimes(time)}
+            >
+              {classTimes.length
+                ? classTimes.map((classTime) => {
+                    return <option>{classTime.time}</option>;
+                  })
+                : null}
+            </Select>
+            <Button type="submit">예약하기</Button>
+          </Form>
+        </Formik>
       </main>
     </>
   );
@@ -69,4 +80,4 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-export default ReserveClass;
+export default MakeReservation;

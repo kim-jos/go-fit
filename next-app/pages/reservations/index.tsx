@@ -1,12 +1,12 @@
-import { Button } from "@chakra-ui/react";
+import { Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { getClassesList } from "../../src/services/classes.api";
-import { Classes } from "../../src/utils/database.entities";
+import { Classes } from "../../src/utils/database/database.entities";
 import styles from "../../styles/Home.module.css";
 
-function ReservationsList({ gymList }) {
+function MyReservationsList({ gymList }) {
   let [gyms, setGyms] = useState(gymList);
 
   const showGymList = () => {

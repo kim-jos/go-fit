@@ -1,13 +1,13 @@
 import {
-  Classes,
-  ReservationTransactions,
-  Users,
-} from "../utils/database.entities";
-import {
   classesTable,
   reservationTransactionTable,
   usersTable,
 } from "../utils/database.table.names";
+import {
+  Classes,
+  ReservationTransactions,
+  Users,
+} from "../utils/database/database.entities";
 import { supabaseClient } from "../utils/supabase.key";
 
 export async function getUserReservations(
